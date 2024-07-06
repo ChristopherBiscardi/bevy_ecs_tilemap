@@ -38,7 +38,7 @@ use self::{
     queue::ImageBindGroups,
 };
 
-mod chunk;
+pub mod chunk;
 mod draw;
 mod extract;
 mod include_shader;
