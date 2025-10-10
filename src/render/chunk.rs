@@ -1,9 +1,10 @@
 use std::hash::{Hash, Hasher};
 
+use bevy::mesh::primitives::Aabb;
 use bevy::platform::collections::HashMap;
+use bevy::render::mesh::BaseMeshPipelineKey;
 use bevy::render::render_asset::RenderAssetUsages;
 use bevy::render::render_resource::Buffer;
-use bevy::render::{mesh::BaseMeshPipelineKey, primitives::Aabb};
 use bevy::{math::Mat4, render::mesh::PrimitiveTopology};
 use bevy::{
     math::{UVec2, UVec3, UVec4, Vec2, Vec3Swizzles, Vec4, Vec4Swizzles},

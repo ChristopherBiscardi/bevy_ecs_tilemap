@@ -1,9 +1,10 @@
 use bevy::{
+    camera::primitives::Frustum,
     math::Affine3A,
+    mesh::primitives::Aabb,
     platform::collections::HashMap,
     prelude::*,
     render::Extract,
-    render::primitives::{Aabb, Frustum},
     render::render_resource::{FilterMode, TextureFormat},
     render::sync_world::RenderEntity,
 };

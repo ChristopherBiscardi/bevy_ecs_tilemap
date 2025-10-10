@@ -1,7 +1,7 @@
 use std::marker::PhantomData;
 
 use bevy::{
-    asset::{load_internal_asset, weak_handle},
+    asset::{load_internal_asset, uuid_handle},
     core_pipeline::core_2d::Transparent2d,
     image::ImageSamplerDescriptor,
     platform::collections::HashSet,
@@ -93,19 +93,19 @@ impl RenderChunkSize {
 
 pub struct TilemapRenderingPlugin;
 
-pub const COLUMN_EVEN_HEX: Handle<Shader> = weak_handle!("d11ea18c-32ef-4b16-ba20-c7b092e46ce8");
-pub const COLUMN_HEX: Handle<Shader> = weak_handle!("9161d191-94ff-48f7-8e46-6950bcad1c7a");
-pub const COLUMN_ODD_HEX: Handle<Shader> = weak_handle!("6806e648-498f-4aaf-a4cc-59db167b2e2b");
-pub const COMMON: Handle<Shader> = weak_handle!("0f11250b-3108-4417-9691-502b6daad0c5");
-pub const DIAMOND_ISO: Handle<Shader> = weak_handle!("c21075c7-3455-4db0-9e70-af1d3c5dd535");
-pub const MESH_OUTPUT: Handle<Shader> = weak_handle!("525be111-6731-4c38-be46-573a615a5e83");
-pub const ROW_EVEN_HEX: Handle<Shader> = weak_handle!("b496c0e9-e57c-4a13-88a3-3b7a5033fe89");
-pub const ROW_HEX: Handle<Shader> = weak_handle!("04a9c819-45e0-42d3-9cea-8b9e5440ca00");
-pub const ROW_ODD_HEX: Handle<Shader> = weak_handle!("9962f145-0937-44f4-98f5-0cd5deadd643");
-pub const STAGGERED_ISO: Handle<Shader> = weak_handle!("da349823-a307-44a5-ab78-6276c7cb582a");
-pub const SQUARE: Handle<Shader> = weak_handle!("6db56afb-a562-4e3c-b459-486a6d5c12ae");
+pub const COLUMN_EVEN_HEX: Handle<Shader> = uuid_handle!("d11ea18c-32ef-4b16-ba20-c7b092e46ce8");
+pub const COLUMN_HEX: Handle<Shader> = uuid_handle!("9161d191-94ff-48f7-8e46-6950bcad1c7a");
+pub const COLUMN_ODD_HEX: Handle<Shader> = uuid_handle!("6806e648-498f-4aaf-a4cc-59db167b2e2b");
+pub const COMMON: Handle<Shader> = uuid_handle!("0f11250b-3108-4417-9691-502b6daad0c5");
+pub const DIAMOND_ISO: Handle<Shader> = uuid_handle!("c21075c7-3455-4db0-9e70-af1d3c5dd535");
+pub const MESH_OUTPUT: Handle<Shader> = uuid_handle!("525be111-6731-4c38-be46-573a615a5e83");
+pub const ROW_EVEN_HEX: Handle<Shader> = uuid_handle!("b496c0e9-e57c-4a13-88a3-3b7a5033fe89");
+pub const ROW_HEX: Handle<Shader> = uuid_handle!("04a9c819-45e0-42d3-9cea-8b9e5440ca00");
+pub const ROW_ODD_HEX: Handle<Shader> = uuid_handle!("9962f145-0937-44f4-98f5-0cd5deadd643");
+pub const STAGGERED_ISO: Handle<Shader> = uuid_handle!("da349823-a307-44a5-ab78-6276c7cb582a");
+pub const SQUARE: Handle<Shader> = uuid_handle!("6db56afb-a562-4e3c-b459-486a6d5c12ae");
 pub const TILEMAP_VERTEX_OUTPUT: Handle<Shader> =
-    weak_handle!("49b568da-6c5a-4936-a3c8-d5dd6b894f92");
+    uuid_handle!("49b568da-6c5a-4936-a3c8-d5dd6b894f92");
 
 impl Plugin for TilemapRenderingPlugin {
     fn build(&self, app: &mut App) {
@@ -304,7 +304,7 @@ pub struct RemovedTileEntity(pub RenderEntity);
 pub struct RemovedMapEntity(pub RenderEntity);
 
 fn on_remove_tile(
-    trigger: Trigger<OnRemove, TilePos>,
+    trigger: On<OnRemove, TilePos>,
     mut commands: Commands,
     query: Query<&RenderEntity>,
 ) {
@@ -314,7 +314,7 @@ fn on_remove_tile(
 }
 
 fn on_remove_tilemap(
-    trigger: Trigger<OnRemove, TileStorage>,
+    trigger: On<OnRemove, TileStorage>,
     mut commands: Commands,
     query: Query<&RenderEntity>,
 ) {

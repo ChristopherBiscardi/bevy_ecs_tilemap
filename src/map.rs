@@ -1,5 +1,6 @@
 use bevy::{
     asset::Assets,
+    camera::visibility::{VisibilityClass, add_visibility_class},
     ecs::{
         entity::{EntityMapper, MapEntities},
         reflect::ReflectMapEntities,
@@ -8,10 +9,7 @@ use bevy::{
     prelude::{
         Component, Deref, DerefMut, Entity, Handle, Image, Reflect, ReflectComponent, Res, ResMut,
     },
-    render::{
-        render_resource::TextureUsages,
-        view::{VisibilityClass, add_visibility_class},
-    },
+    render::render_resource::TextureUsages,
 };
 use std::ops::Add;
 
