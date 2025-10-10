@@ -19,6 +19,7 @@ use bevy::{
         renderer::{RenderDevice, RenderQueue},
     },
 };
+use bevy_mesh::MeshVertexBufferLayouts;
 
 use super::extract::ChangedInMainWorld;
 use super::{

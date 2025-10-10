@@ -19,6 +19,7 @@ use bevy::{
         view::{ViewTarget, ViewUniform},
     },
 };
+use bevy_mesh::VertexBufferLayout;
 
 use crate::map::{HexCoordSystem, IsoCoordSystem, TilemapType};
 
