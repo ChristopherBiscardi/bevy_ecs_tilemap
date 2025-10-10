@@ -21,13 +21,14 @@ use bevy::{
         render_resource::{
             AsBindGroup, AsBindGroupError, BindGroup, BindGroupEntry, BindGroupLayout,
             BindingResource, OwnedBindingResource, PipelineCache, RenderPipelineDescriptor,
-            ShaderRef, SpecializedRenderPipeline, SpecializedRenderPipelines,
+            SpecializedRenderPipeline, SpecializedRenderPipelines,
         },
         renderer::RenderDevice,
         texture::GpuImage,
         view::{ExtractedView, RenderVisibleEntities, ViewUniforms},
     },
 };
+use bevy_shader::ShaderRef;
 use std::{hash::Hash, marker::PhantomData};
 
 use super::{
@@ -176,8 +177,10 @@ where
     }
 }
 
+use bevy::render::render_resource::BindingResources;
+
 pub struct PreparedMaterialTilemap<T: MaterialTilemap> {
-    pub bindings: Vec<(u32, OwnedBindingResource)>,
+    pub bindings: BindingResources,
     pub bind_group: BindGroup,
     pub key: T::Data,
 }
@@ -391,10 +394,11 @@ fn prepare_material_tilemap<M: MaterialTilemap>(
 ) -> Result<PreparedMaterialTilemap<M>, AsBindGroupError> {
     let prepared =
         material.as_bind_group(&pipeline.material_tilemap_layout, render_device, param)?;
+    let key = material.bind_group_data();
     Ok(PreparedMaterialTilemap {
-        bindings: prepared.bindings.0,
+        bindings: prepared.bindings,
         bind_group: prepared.bind_group,
-        key: prepared.data,
+        key,
     })
 }
 

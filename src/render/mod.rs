@@ -7,15 +7,15 @@ use bevy::{
     platform::collections::HashSet,
     prelude::*,
     render::{
-        Render, RenderApp, RenderSet,
+        Render, RenderApp, RenderSystems,
         extract_component::{ExtractComponent, ExtractComponentPlugin},
         extract_resource::{ExtractResource, extract_resource},
-        mesh::MeshVertexAttribute,
         render_phase::AddRenderCommand,
         render_resource::{FilterMode, SpecializedRenderPipelines, VertexFormat},
         sync_world::RenderEntity,
     },
 };
+use bevy_mesh::MeshVertexAttribute;
 
 #[cfg(not(feature = "atlas"))]
 use bevy::render::renderer::RenderDevice;
@@ -234,7 +234,10 @@ impl Plugin for TilemapRenderingPlugin {
         #[cfg(not(feature = "atlas"))]
         render_app
             .init_resource::<TextureArrayCache>()
-            .add_systems(Render, prepare_textures.in_set(RenderSet::PrepareAssets))
+            .add_systems(
+                Render,
+                prepare_textures.in_set(RenderSystems::PrepareAssets),
+            )
             .add_systems(Render, texture_array_cache::remove_modified_textures);
 
         render_app
@@ -248,13 +251,13 @@ impl Plugin for TilemapRenderingPlugin {
                 Render,
                 (prepare::prepare_removal, prepare::prepare)
                     .chain()
-                    .in_set(RenderSet::PrepareAssets),
+                    .in_set(RenderSystems::PrepareAssets),
             )
             .add_systems(
                 Render,
-                queue::queue_transform_bind_group.in_set(RenderSet::PrepareBindGroups),
+                queue::queue_transform_bind_group.in_set(RenderSystems::PrepareBindGroups),
             )
-            .add_systems(Render, remove_changed.in_set(RenderSet::Cleanup))
+            .add_systems(Render, remove_changed.in_set(RenderSystems::Cleanup))
             .init_resource::<ImageBindGroups>()
             .init_resource::<SpecializedRenderPipelines<TilemapPipeline>>()
             .init_resource::<MeshUniformResource>()
@@ -304,7 +307,7 @@ pub struct RemovedTileEntity(pub RenderEntity);
 pub struct RemovedMapEntity(pub RenderEntity);
 
 fn on_remove_tile(
-    trigger: On<OnRemove, TilePos>,
+    trigger: On<Remove, TilePos>,
     mut commands: Commands,
     query: Query<&RenderEntity>,
 ) {
@@ -314,7 +317,7 @@ fn on_remove_tile(
 }
 
 fn on_remove_tilemap(
-    trigger: On<OnRemove, TileStorage>,
+    trigger: On<Remove, TileStorage>,
     mut commands: Commands,
     query: Query<&RenderEntity>,
 ) {

@@ -1,7 +1,6 @@
 use bevy::{
-    camera::primitives::Frustum,
-    math::Affine3A,
-    mesh::primitives::Aabb,
+    camera::primitives::{Aabb, Frustum},
+    math::{Affine3A, bounding::Aabb3d},
     platform::collections::HashMap,
     prelude::*,
     render::Extract,
@@ -170,9 +169,12 @@ pub struct ExtractedFrustum {
 }
 
 impl ExtractedFrustum {
-    pub fn intersects_obb(&self, aabb: &Aabb, transform_matrix: &Mat4) -> bool {
+    pub fn intersects_obb(&self, aabb3d: &Aabb3d, transform_matrix: &Mat4) -> bool {
+        // Convert Aabb3d to Aabb (camera primitives version)
+        // Aabb3d uses Vec3A, but Aabb uses Vec3, so we need to convert
+        let aabb = Aabb::from_min_max(aabb3d.min.into(), aabb3d.max.into());
         self.frustum
-            .intersects_obb(aabb, &Affine3A::from_mat4(*transform_matrix), true, false)
+            .intersects_obb(&aabb, &Affine3A::from_mat4(*transform_matrix), true, false)
     }
 }
 

@@ -10,7 +10,6 @@ use crate::render::extract::ExtractedFrustum;
 use crate::{FrustumCulling, prelude::TilemapGridSize, render::RenderChunkSize};
 use bevy::log::trace;
 use bevy::prelude::{InheritedVisibility, Resource, Transform, With};
-use bevy::render::mesh::MeshVertexBufferLayouts;
 use bevy::render::sync_world::TemporaryRenderEntity;
 use bevy::{
     math::{Mat4, UVec4},
@@ -20,6 +19,7 @@ use bevy::{
         renderer::{RenderDevice, RenderQueue},
     },
 };
+use bevy_mesh::MeshVertexBufferLayouts;
 
 use super::extract::ChangedInMainWorld;
 use super::{

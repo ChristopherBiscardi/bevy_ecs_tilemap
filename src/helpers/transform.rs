@@ -1,7 +1,7 @@
 use crate::tiles::TilePos;
 use crate::{TilemapGridSize, TilemapTileSize, TilemapType};
+use bevy::math::bounding::Aabb3d as Aabb;
 use bevy::math::{UVec2, Vec2, Vec3};
-use bevy::mesh::primitives::Aabb;
 
 /// Calculates the world-space position of the bottom-left of the specified chunk.
 pub fn chunk_index_to_world_space(
@@ -48,5 +48,5 @@ pub fn chunk_aabb(
 
     let minimum = Vec3::from((c0.min(c1).min(c2).min(c3) - border, 0.0));
     let maximum = Vec3::from((c0.max(c1).max(c2).max(c3) + border, 1.0));
-    Aabb::from_min_max(minimum, maximum)
+    Aabb::new(minimum, maximum)
 }

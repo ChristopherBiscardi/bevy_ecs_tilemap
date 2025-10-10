@@ -53,8 +53,8 @@ impl TilemapAnchor {
             tile_size,
             map_type,
         );
-        let min = aabb.min();
-        let max = aabb.max();
+        let min = aabb.min;
+        let max = aabb.max;
         match self {
             TilemapAnchor::None => Vec2::ZERO,
             TilemapAnchor::TopLeft => Vec2::new(-min.x, -max.y),

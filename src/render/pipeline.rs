@@ -12,13 +12,13 @@ use bevy::{
             MultisampleState, PolygonMode, PrimitiveState, PrimitiveTopology,
             RenderPipelineDescriptor, SamplerBindingType, ShaderStages, ShaderType,
             SpecializedRenderPipeline, StencilFaceState, StencilState, TextureFormat,
-            TextureSampleType, TextureViewDimension, VertexBufferLayout, VertexFormat, VertexState,
-            VertexStepMode,
+            TextureSampleType, TextureViewDimension, VertexFormat, VertexState, VertexStepMode,
         },
         renderer::RenderDevice,
         view::{ViewTarget, ViewUniform},
     },
 };
+use bevy_mesh::VertexBufferLayout;
 
 use crate::map::{HexCoordSystem, IsoCoordSystem, TilemapType};
 
@@ -196,14 +196,14 @@ impl SpecializedRenderPipeline for TilemapPipeline {
         RenderPipelineDescriptor {
             vertex: VertexState {
                 shader: TILEMAP_SHADER_VERTEX,
-                entry_point: "vertex".into(),
+                entry_point: Some("vertex".into()),
                 shader_defs: shader_defs.clone(),
                 buffers: vec![vertex_layout],
             },
             fragment: Some(FragmentState {
                 shader: TILEMAP_SHADER_FRAGMENT,
                 shader_defs,
-                entry_point: "fragment".into(),
+                entry_point: Some("fragment".into()),
                 targets: vec![Some(ColorTargetState {
                     format: if key.hdr {
                         ViewTarget::TEXTURE_FORMAT_HDR

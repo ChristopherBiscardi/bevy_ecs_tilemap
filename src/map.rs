@@ -62,7 +62,7 @@ impl MapEntities for TilemapId {
 
 impl Default for TilemapId {
     fn default() -> Self {
-        Self(Entity::from_raw(0))
+        Self(Entity::from_bits(0))
     }
 }
 
@@ -211,14 +211,14 @@ impl TilemapTexture {
 
     pub fn clone_weak(&self) -> Self {
         match self {
-            TilemapTexture::Single(handle) => TilemapTexture::Single(handle.clone_weak()),
+            TilemapTexture::Single(handle) => TilemapTexture::Single(handle.clone()),
             #[cfg(not(feature = "atlas"))]
             TilemapTexture::Vector(handles) => {
-                TilemapTexture::Vector(handles.iter().map(|h| h.clone_weak()).collect())
+                TilemapTexture::Vector(handles.iter().map(|h| h.clone()).collect())
             }
             #[cfg(not(feature = "atlas"))]
             TilemapTexture::TextureContainer(handle) => {
-                TilemapTexture::TextureContainer(handle.clone_weak())
+                TilemapTexture::TextureContainer(handle.clone())
             }
         }
     }
