@@ -69,7 +69,7 @@ features = [
     "ktx2",
     "bevy_winit",
     "bevy_window",
-    # "wayland",
+    "wayland",
     "x11",
     "bevy_text",
     "bevy_sprite",
