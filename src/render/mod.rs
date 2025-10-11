@@ -122,7 +122,8 @@ impl Plugin for TilemapRenderingPlugin {
 
         app.add_plugins(MaterialTilemapPlugin::<StandardTilemapMaterial>::default());
 
-        app.world_mut()
+        let _ = app
+            .world_mut()
             .resource_mut::<Assets<StandardTilemapMaterial>>()
             .insert(
                 Handle::<StandardTilemapMaterial>::default().id(),
@@ -311,7 +312,7 @@ fn on_remove_tile(
     mut commands: Commands,
     query: Query<&RenderEntity>,
 ) {
-    if let Ok(render_entity) = query.get(trigger.target()) {
+    if let Ok(render_entity) = query.get(trigger.event().entity) {
         commands.spawn(RemovedTileEntity(*render_entity));
     }
 }
@@ -321,7 +322,7 @@ fn on_remove_tilemap(
     mut commands: Commands,
     query: Query<&RenderEntity>,
 ) {
-    if let Ok(render_entity) = query.get(trigger.target()) {
+    if let Ok(render_entity) = query.get(trigger.event().entity) {
         commands.spawn(RemovedMapEntity(*render_entity));
     }
 }
@@ -372,7 +373,7 @@ impl ModifiedImageIds {
 /// AssetEvents cannot be read from the render sub-app, so this system packs
 /// them up into a convenient resource which can be extracted for rendering.
 pub fn collect_modified_image_asset_events(
-    mut asset_events: EventReader<AssetEvent<Image>>,
+    mut asset_events: MessageReader<AssetEvent<Image>>,
     mut modified_image_ids: ResMut<ModifiedImageIds>,
 ) {
     modified_image_ids.0.clear();

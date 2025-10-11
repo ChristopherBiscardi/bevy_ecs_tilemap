@@ -11,7 +11,7 @@ use bevy::{
     prelude::*,
     reflect::TypePath,
     render::{
-        Extract, Render, RenderApp, RenderSet,
+        Extract, Render, RenderApp, RenderSystems,
         extract_component::{ExtractComponent, ExtractComponentPlugin},
         globals::GlobalsBuffer,
         render_asset::RenderAssets,
@@ -20,8 +20,8 @@ use bevy::{
         },
         render_resource::{
             AsBindGroup, AsBindGroupError, BindGroup, BindGroupEntry, BindGroupLayout,
-            BindingResource, OwnedBindingResource, PipelineCache, RenderPipelineDescriptor,
-            SpecializedRenderPipeline, SpecializedRenderPipelines,
+            BindingResource, PipelineCache, RenderPipelineDescriptor, SpecializedRenderPipeline,
+            SpecializedRenderPipelines,
         },
         renderer::RenderDevice,
         texture::GpuImage,
@@ -157,7 +157,7 @@ where
                 .add_systems(ExtractSchedule, extract_materials_tilemap::<M>)
                 .add_systems(
                     Render,
-                    prepare_materials_tilemap::<M>.in_set(RenderSet::PrepareAssets),
+                    prepare_materials_tilemap::<M>.in_set(RenderSystems::PrepareAssets),
                 )
                 .add_systems(
                     Render,
@@ -168,9 +168,9 @@ where
                         // to run before the `Prepare` set (which is after Queue). This invites the possibility of an intermittent incorrect ordering dependent
                         // on the scheduler.
                         queue_material_tilemap_meshes::<M>
-                            .in_set(RenderSet::Queue)
+                            .in_set(RenderSystems::Queue)
                             .after(prepare::prepare),
-                        bind_material_tilemap_meshes::<M>.in_set(RenderSet::PrepareBindGroups),
+                        bind_material_tilemap_meshes::<M>.in_set(RenderSystems::PrepareBindGroups),
                     ),
                 );
         }
@@ -288,7 +288,7 @@ impl<T: MaterialTilemap> Default for RenderMaterialsTilemap<T> {
 /// into the "render world".
 fn extract_materials_tilemap<M: MaterialTilemap>(
     mut commands: Commands,
-    mut events: Extract<EventReader<AssetEvent<M>>>,
+    mut events: Extract<MessageReader<AssetEvent<M>>>,
     assets: Extract<Res<Assets<M>>>,
 ) {
     let mut changed_assets = <HashSet<_>>::default();
