@@ -22,7 +22,7 @@ use bevy::{
     platform::collections::HashMap,
     prelude::{
         Added, Asset, AssetApp, AssetEvent, AssetId, Assets, Bundle, Commands, Component, Entity,
-        EventReader, GlobalTransform, Handle, Image, Plugin, Query, Res, Transform, Update,
+        GlobalTransform, Handle, Image, MessageReader, Plugin, Query, Res, Transform, Update,
     },
     reflect::TypePath,
 };
@@ -201,7 +201,7 @@ impl AssetLoader for TiledLoader {
 
 pub fn process_loaded_maps(
     mut commands: Commands,
-    mut map_events: EventReader<AssetEvent<TiledMap>>,
+    mut map_events: MessageReader<AssetEvent<TiledMap>>,
     maps: Res<Assets<TiledMap>>,
     tile_storage_query: Query<(Entity, &TileStorage)>,
     mut map_query: Query<(

@@ -1,5 +1,6 @@
 use bevy::{prelude::*, reflect::TypePath, render::render_resource::AsBindGroup};
 use bevy_ecs_tilemap::prelude::*;
+use bevy_shader::ShaderRef;
 mod helpers;
 
 #[derive(AsBindGroup, TypePath, Debug, Clone, Default, Asset)]
@@ -12,7 +13,7 @@ pub struct MyMaterial {
 }
 
 impl MaterialTilemap for MyMaterial {
-    fn fragment_shader() -> bevy::render::render_resource::ShaderRef {
+    fn fragment_shader() -> ShaderRef {
         "custom_shader.wgsl".into()
     }
 }

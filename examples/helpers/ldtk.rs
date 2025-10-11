@@ -7,6 +7,7 @@ use bevy_ecs_tilemap::{
 use std::{collections::HashMap, io::ErrorKind};
 use thiserror::Error;
 
+use bevy::prelude::MessageReader;
 use bevy::{asset::io::Reader, reflect::TypePath};
 use bevy::{
     asset::{AssetLoader, AssetPath, LoadContext},
@@ -108,7 +109,7 @@ impl AssetLoader for LdtkLoader {
 
 pub fn process_loaded_tile_maps(
     mut commands: Commands,
-    mut map_events: EventReader<AssetEvent<LdtkMap>>,
+    mut map_events: MessageReader<AssetEvent<LdtkMap>>,
     maps: Res<Assets<LdtkMap>>,
     mut query: Query<(Entity, &LdtkMapHandle, &LdtkMapConfig)>,
     new_maps: Query<&LdtkMapHandle, Added<LdtkMapHandle>>,
