@@ -2,6 +2,7 @@ use bevy::{
     prelude::*, reflect::TypePath, render::render_resource::AsBindGroup, shader::ShaderRef,
 };
 use bevy_ecs_tilemap::prelude::*;
+use bevy_shader::ShaderRef;
 mod helpers;
 
 #[derive(AsBindGroup, TypePath, Debug, Clone, Default, Asset)]
