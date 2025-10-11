@@ -18,8 +18,8 @@ use bevy::{
         },
         render_resource::{
             AsBindGroup, AsBindGroupError, BindGroup, BindGroupEntry, BindGroupLayout,
-            BindingResource, OwnedBindingResource, PipelineCache, RenderPipelineDescriptor,
-            SpecializedRenderPipeline, SpecializedRenderPipelines,
+            BindingResource, PipelineCache, RenderPipelineDescriptor, SpecializedRenderPipeline,
+            SpecializedRenderPipelines,
         },
         renderer::RenderDevice,
         texture::GpuImage,
