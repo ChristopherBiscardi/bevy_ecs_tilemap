@@ -146,10 +146,10 @@ impl TextureArrayCache {
         for texture in prepare_queue.iter() {
             // Fixes issue where default handle causes a crash. There should be a better
             // way of fixing this.
-            if let TilemapTexture::Single(t) = texture {
-                if bevy::prelude::Handle::default() == *t {
-                    return;
-                }
+            if let TilemapTexture::Single(t) = texture
+                && bevy::prelude::Handle::default() == *t
+            {
+                return;
             }
 
             match texture {

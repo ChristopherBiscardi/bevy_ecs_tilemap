@@ -5,10 +5,7 @@ use bevy::{
     mesh::{BaseMeshPipelineKey, Indices, PrimitiveTopology},
     platform::collections::HashMap,
 };
-use bevy::{
-    camera::primitives::Aabb,
-    math::{Mat4, bounding::Aabb3d},
-};
+use bevy::{camera::primitives::Aabb, math::Mat4};
 use bevy::{
     math::{UVec2, UVec3, UVec4, Vec2, Vec3Swizzles, Vec4, Vec4Swizzles},
     prelude::{Component, Entity, GlobalTransform, Mesh},
@@ -321,11 +318,7 @@ impl RenderChunk2d {
     }
 
     pub fn intersects_frustum(&self, frustum: &ExtractedFrustum) -> bool {
-        let aabb3d = Aabb3d {
-            min: self.aabb.min().into(),
-            max: self.aabb.max().into(),
-        };
-        frustum.intersects_obb(&aabb3d, &self.transform_matrix)
+        frustum.intersects_obb(&self.aabb, &self.transform_matrix)
     }
 
     pub fn update_geometry(
