@@ -7,7 +7,6 @@ use bevy_ecs_tilemap::{
 use std::{collections::HashMap, io::ErrorKind};
 use thiserror::Error;
 
-use bevy::prelude::MessageReader;
 use bevy::{asset::io::Reader, reflect::TypePath};
 use bevy::{
     asset::{AssetLoader, AssetPath, LoadContext},
